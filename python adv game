@@ -1,0 +1,124 @@
+import time
+
+# Game state variables
+inventory = []
+player_health = 100
+
+def display_intro():
+    print("Welcome to the Adventure in Eldoria!")
+    time.sleep(1)
+    print("Your quest: Find the Crystal of Destiny and unlock its power.")
+    time.sleep(1)
+
+def make_choice(choices):
+    print("\nChoose your path:")
+    for i, choice in enumerate(choices, 1):
+        print(f"{i}. {choice}")
+
+    while True:
+        try:
+            user_input = int(input("Enter the number of your choice: "))
+            if 1 <= user_input <= len(choices):
+                return user_input
+            else:
+                print("Invalid choice. Please choose a valid number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+def start_adventure():
+    display_intro()
+    print("You stand at the crossroads. Two paths lie ahead.")
+
+    choices = ["Take the Forest Path", "Enter the Cavern"]
+    choice = make_choice(choices)
+
+    if choice == 1:
+        forest_path()
+    elif choice == 2:
+        cavern_path()
+
+def forest_path():
+    print("You enter the mystical forest.")
+    time.sleep(1)
+    print("A talking squirrel approaches you.")
+    time.sleep(1)
+    print("1. Talk to the squirrel.")
+    print("2. Ignore the squirrel and continue.")
+
+    squirrel_choice = make_choice(["Talk to the squirrel", "Ignore the squirrel"])
+
+    if squirrel_choice == 1:
+        print("The squirrel reveals a hidden shortcut.")
+        time.sleep(1)
+        print("You gain a magical amulet.")
+        inventory.append("Magical Amulet")
+        time.sleep(1)
+    else:
+        print("You decide to ignore the squirrel.")
+
+    print("You continue deeper into the forest.")
+
+    # Continue with the story...
+
+def cavern_path():
+    print("You enter a dark cavern filled with glowing mushrooms.")
+    time.sleep(1)
+    print("You encounter a mysterious figure.")
+    time.sleep(1)
+    print("1. Approach the figure.")
+    print("2. Retreat silently.")
+
+    figure_choice = make_choice(["Approach the figure", "Retreat silently"])
+
+    if figure_choice == 1:
+        print("The figure offers you a map to the Crystal's location.")
+        time.sleep(1)
+        print("You gain the Crystal Map.")
+        inventory.append("Crystal Map")
+        time.sleep(1)
+    else:
+        print("You decide to retreat silently.")
+
+    print("You continue through the cavern.")
+
+    # Continue with the story...
+
+def climax():
+    print("You reach the Crystal's chamber.")
+    time.sleep(1)
+    print("The Crystal of Destiny awaits.")
+    time.sleep(1)
+    print("1. Use the Magical Amulet.")
+    print("2. Follow the instructions on the Crystal Map.")
+
+    climax_choice = make_choice(["Use the Magical Amulet", "Follow the Crystal Map"])
+
+    if climax_choice == 1 and "Magical Amulet" in inventory:
+        print("The amulet resonates with the Crystal, unlocking its power.")
+        time.sleep(1)
+        print("Congratulations! You have harnessed the Crystal of Destiny!")
+        time.sleep(1)
+        print("You are now the most powerful adventurer in Eldoria.")
+    elif climax_choice == 2 and "Crystal Map" in inventory:
+        print("You follow the map precisely, unlocking the power of the Crystal.")
+        time.sleep(1)
+        print("Congratulations! You have harnessed the Crystal of Destiny!")
+        time.sleep(1)
+        print("You are now the most powerful adventurer in Eldoria.")
+    else:
+        print("You attempt to use the Crystal, but something goes wrong.")
+        time.sleep(1)
+        print("The Crystal's power overwhelms you, and darkness consumes Eldoria.")
+        game_over()
+
+def game_over():
+    print("Game over! Your journey ends here.")
+    exit()
+
+def main():
+    start_adventure()
+    # Continue with the story...
+    climax()
+
+if __name__ == "__main__":
+    main()
