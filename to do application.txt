@@ -1,0 +1,109 @@
+1. Project Structure
+For the CLI version, the project can be structured as follows:
+
+main.py: The main script to run the application.
+todo_list.py: A module containing the ToDoList class which manages tasks.
+task.py: A module containing the Task class which represents a single task.
+2. Implementation
+task.py
+python
+Copy code
+class Task:
+    def __init__(self, description, due_date=None, priority=None):
+        self.description = description
+        self.due_date = due_date
+        self.priority = priority
+        self.completed = False
+
+    def __str__(self):
+        return f"{'[X]' if self.completed else '[ ]'} {self.description} - Due: {self.due_date or 'None'}, Priority: {self.priority or 'None'}"
+todo_list.py
+python
+Copy code
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+
+    def display_tasks(self):
+        for task in self.tasks:
+            print(task)
+
+    def mark_completed(self, task_index):
+        if 0 <= task_index < len(self.tasks):
+            self.tasks[task_index].completed = True
+            return True
+        return False
+
+    def update_task(self, task_index, description=None, due_date=None, priority=None):
+        if 0 <= task_index < len(self.tasks):
+            if description:
+                self.tasks[task_index].description = description
+            if due_date:
+                self.tasks[task_index].due_date = due_date
+            if priority:
+                self.tasks[task_index].priority = priority
+            return True
+        return False
+
+    def remove_task(self, task_index):
+        if 0 <= task_index < len(self.tasks):
+            del self.tasks[task_index]
+            return True
+        return False
+main.py
+python
+Copy code
+from todo_list import ToDoList
+from task import Task
+
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        print("\nTo-Do List Application")
+        print("1. Add Task\n2. Display Tasks\n3. Mark Task Completed\n4. Update Task\n5. Remove Task\n6. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            description = input("Enter task description: ")
+            due_date = input("Enter due date (or leave blank): ")
+            priority = input("Enter priority (or leave blank): ")
+            todo_list.add_task(Task(description, due_date, priority))
+
+        elif choice == '2':
+            todo_list.display_tasks()
+
+        elif choice == '3':
+            index = int(input("Enter task index to mark as completed: "))
+            if not todo_list.mark_completed(index):
+                print("Invalid task index.")
+
+        elif choice == '4':
+            index = int(input("Enter task index to update: "))
+            description = input("Enter new description (or leave blank): ")
+            due_date = input("Enter new due date (or leave blank): ")
+            priority = input("Enter new priority (or leave blank): ")
+            if not todo_list.update_task(index, description, due_date, priority):
+                print("Invalid task index.")
+
+        elif choice == '5':
+            index = int(input("Enter task index to remove: "))
+            if not todo_list.remove_task(index):
+                print("Invalid task index.")
+
+        elif choice == '6':
+            break
+        else:
+            print("Invalid choice. Please choose again.")
+
+if __name__ == "__main__":
+    main()
+3. Extension to GUI
+To extend this application to a GUI, you could use a library like Tkinter or PyQt. Here's a brief idea of what it would entail:
+
+Replace the CLI interaction in main.py with GUI components like buttons, text fields, and lists.
+Set up event handlers for buttons to invoke methods from ToDoList and Task classes.
+Update the GUI in real-time to reflect changes in the task list.
